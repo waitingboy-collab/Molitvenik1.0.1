@@ -1,7 +1,7 @@
 name: Build APK
 
 # Компилира подписан APK и го публикува в GitHub Releases.
-# Пуска се при нов таг (напр. v1.1) или ръчно от раздел Actions.
+# Пуска се при нов таг (напр. v1.1) или ръчно: Actions → Build APK → Run workflow.
 on:
   push:
     tags: ["v*"]
@@ -47,9 +47,10 @@ jobs:
           path: Molitvenik-v*.apk
 
       - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('v{0}', env.VERSION) }}
+          target_commitish: ${{ github.sha }}
           name: Джобен молитвеник ${{ env.VERSION }}
           files: Molitvenik-v*.apk
           body_path: RELEASE_NOTES.md
