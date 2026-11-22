@@ -5,6 +5,7 @@ name: Build APK
 on:
   push:
     tags: ["v*"]
+    branches: ["ci/**"]   # само проверка на компилацията, без Release
   workflow_dispatch:
 
 permissions:
@@ -53,6 +54,7 @@ jobs:
           path: Molitvenik-v*.apk
 
       - name: Publish GitHub Release
+        if: ${{ !startsWith(github.ref, 'refs/heads/ci/') }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('v{0}', env.VERSION) }}
