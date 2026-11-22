@@ -25,7 +25,7 @@ android {
     val storePath = secret("KEYSTORE_PATH", "storeFile")
 
     signingConfigs {
-        if (storePath != null && file(storePath).exists()) {
+        if (storePath != null && file(storePath).length() > 0 && secret("KEYSTORE_PASSWORD", "storePassword") != null) {
             create("release") {
                 storeFile = file(storePath)
                 storePassword = secret("KEYSTORE_PASSWORD", "storePassword")
@@ -37,7 +37,8 @@ android {
 
     buildTypes {
         release {
-            signingConfigs.findByName("release")?.let { signingConfig = it }
+            // Без ключ (напр. липсващи секрети) се подписва с debug ключа, за да може APK-то пак да се инсталира.
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
         }
