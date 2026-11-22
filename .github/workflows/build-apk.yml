@@ -1,11 +1,11 @@
 name: Build APK
 
 # Компилира подписан APK и го публикува в GitHub Releases.
-# Пуска се при нов таг (напр. v1.1) или ръчно: Actions → Build APK → Run workflow.
+# Пуска се при нов таг (напр. v1.1), при push в клон release или ръчно: Actions → Build APK → Run workflow.
 on:
   push:
     tags: ["v*"]
-    branches: ["ci/**"]   # само проверка на компилацията, без Release
+    branches: ["ci/**", "release"]   # ci/** = само проверка; release = билд + GitHub Release
   workflow_dispatch:
 
 permissions:
