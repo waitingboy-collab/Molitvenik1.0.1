@@ -19,7 +19,7 @@
 
 ## Изтегляне
 
-Последната версия е тук: https://github.com/waitingboy-collab/Molitvenik/releases/latest
+Последната версия е тук: https://github.com/waitingboy-collab/Molitvenik1.0.1/releases/latest
 
 ## Как се пуска нова версия
 
